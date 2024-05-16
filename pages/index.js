@@ -247,9 +247,7 @@ export default function Home() {
                           /
                           {/* Copy btn */}
                           <button onClick={() => {
-                              navigator.clipboard.writeText(`${customDomain() ?? window.location.origin}/${result.key}`).then(() => {
-                                alert('Copied to clipboard!')
-                              })
+                              navigator.clipboard.writeText(`${customDomain() ?? window.location.origin}/${result.key}`)
                             }}
                             className="hover:text-blue-600 dark:hover:text-blue-500"
                           >
