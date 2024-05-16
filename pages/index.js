@@ -26,9 +26,9 @@ export default function Home() {
       await fetch(`/api/v3/domain?add=${domain}`)
       .then(res => {
         if (res.status === 403) {
-          alert('您无权添加此域！')
+          alert('You are not authorized to add this domain.')
         } else if (res.status === 409) {
-          alert('此域名/子域已被占用！')
+          alert('This domain/subdomain is already taken. Please remove it from your Vercel account and try again.')
         } else if (res.status === 200) {
           // check domain ip CNAME to cname.vercel-dns.com
           fetch(`https://dns.google/resolve?name=${domain}&type=CNAME`)
@@ -37,16 +37,16 @@ export default function Home() {
             if ( (data.Answer && data.Answer[0].data === 'cname.vercel-dns.com.') || (data.Authority && data.Authority[0].name === 'vercel.app.') ) {
             }
             else {
-              alert('域名/子域添加成功！请使用 CNAME 并指向 cname.vercel-dns.com。')
+              alert('Domain/Subdomain added successfully. Please use CNAME and point to cname.vercel-dns.com.')
             }
           })
         } else {
-          alert('出错了，请稍后再试。')
+          alert('Something went wrong, please try again later.')
         }
       })
       .catch(err => {
         console.error(err)
-        alert('出错了，请稍后再试。')
+        alert('Something went wrong, please try again later.')
       })
     }
 
@@ -71,13 +71,13 @@ export default function Home() {
       setLoading(false)
     })
     .catch(err => {
-      if (err.message === '403') {
-        alert('您无权添加此域！')
-      } else if (err.message === '409') {
-        alert('此域名/子域已被占用！')
+      if (res.status === 403) {
+        alert('You are not authorized to add this domain.')
+      } else if (res.status === 409) {
+        alert('This domain/subdomain is already taken. Please remove it from your Vercel account and try again.')
       } else {
-        console.error(err)
-        alert('出错了，请稍后再试。')
+      console.error(err)
+      alert('Something went wrong, please try again later.')
       }
       setLoading(false)
     })
