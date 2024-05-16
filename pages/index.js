@@ -22,7 +22,7 @@ export default function Home() {
     const path = formData.get('path')
 
     // GET /api/{API Version}/domain?add={domain}
-    if (domain !== "") {
+    if (domain) {
       await fetch(`/api/v3/domain?add=${domain}`)
       .then(res => {
         if (res.status === 403) {
