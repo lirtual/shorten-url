@@ -46,6 +46,7 @@ export default function Home() {
       })
       .catch(err => {
         console.error(err)
+        alert('出错了，请稍后再试。')
       })
     }
 
@@ -59,13 +60,10 @@ export default function Home() {
       })
     })
     .then(res => {
-      if (res.status === 403) {
-        alert('您无权添加此域！')
-      } else if (res.status === 409) {
-        alert('此域名/子域已被占用！')
-      } else {
-        alert('出错了，请稍后再试。')
+      if (res.status !== 200) {
+        throw new Error(res.status)
       }
+      return res
     })
     .then(res => res.json())
     .then(data => {
@@ -73,7 +71,14 @@ export default function Home() {
       setLoading(false)
     })
     .catch(err => {
-      console.error(err)
+      if (err.message === '403') {
+        alert('您无权添加此域！')
+      } else if (err.message === '409') {
+        alert('此域名/子域已被占用！')
+      } else {
+        console.error(err)
+        alert('出错了，请稍后再试。')
+      }
       setLoading(false)
     })
   }
