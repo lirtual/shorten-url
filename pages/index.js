@@ -26,9 +26,9 @@ export default function Home() {
       await fetch(`/api/v3/domain?add=${domain}`)
       .then(res => {
         if (res.status === 403) {
-          alert('You are not authorized to add this domain.')
+          alert('您无权添加此域！')
         } else if (res.status === 409) {
-          alert('This domain/subdomain is already taken. Please remove it from your Vercel account and try again.')
+          alert('此域名/子域已被占用！')
         } else if (res.status === 200) {
           // check domain ip CNAME to cname.vercel-dns.com
           fetch(`https://dns.google/resolve?name=${domain}&type=CNAME`)
@@ -37,16 +37,15 @@ export default function Home() {
             if ( (data.Answer && data.Answer[0].data === 'cname.vercel-dns.com.') || (data.Authority && data.Authority[0].name === 'vercel.app.') ) {
             }
             else {
-              alert('Domain/Subdomain added successfully. Please use CNAME and point to cname.vercel-dns.com.')
+              alert('域名/子域添加成功！请使用 CNAME 并指向 cname.vercel-dns.com。')
             }
           })
         } else {
-          alert('Something went wrong, please try again later.')
+          alert('出错了，请稍后再试。')
         }
       })
       .catch(err => {
         console.error(err)
-        alert('Something went wrong, please try again later.')
       })
     }
 
@@ -61,22 +60,11 @@ export default function Home() {
     })
     .then(res => {
       if (res.status === 403) {
-        alert('You are not authorized to add this domain.')
+        alert('您无权添加此域！')
       } else if (res.status === 409) {
-        alert('This domain/subdomain is already taken. Please remove it from your Vercel account and try again.')
-      } else if (res.status === 200) {
-        // check domain ip CNAME to cname.vercel-dns.com
-        fetch(`https://dns.google/resolve?name=${domain}&type=CNAME`)
-        .then(res => res.json())
-        .then(data => {
-          if ( (data.Answer && data.Answer[0].data === 'cname.vercel-dns.com.') || (data.Authority && data.Authority[0].name === 'vercel.app.') ) {
-          }
-          else {
-            alert('Domain/Subdomain added successfully. Please use CNAME and point to cname.vercel-dns.com.')
-          }
-        })
+        alert('此域名/子域已被占用！')
       } else {
-        alert('Something went wrong, please try again later.')
+        alert('出错了，请稍后再试。')
       }
     })
     .then(res => res.json())
@@ -86,7 +74,6 @@ export default function Home() {
     })
     .catch(err => {
       console.error(err)
-      alert('Something went wrong, please try again later.')
       setLoading(false)
     })
   }
