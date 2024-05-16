@@ -71,13 +71,13 @@ export default function Home() {
       setLoading(false)
     })
     .catch(err => {
-      if (res.status === 403) {
+      if (err.status === 403) {
         alert('You are not authorized to add this domain.')
-      } else if (res.status === 409) {
+      } else if (err.status === 409) {
         alert('This domain/subdomain is already taken. Please remove it from your Vercel account and try again.')
       } else {
-      console.error(err)
-      alert('Something went wrong, please try again later.')
+        console.error(err)
+        alert('Something went wrong, please try again later.')
       }
       setLoading(false)
     })
