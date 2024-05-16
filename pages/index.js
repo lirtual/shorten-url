@@ -19,7 +19,7 @@ export default function Home() {
     const urls = formData.get('urls')
     const password = formData.get('password')
     const domain = formData.get('domain')
-    const ref = formData.get('ref')
+    const path = formData.get('path')
 
     // GET /api/{API Version}/domain?add={domain}
     if (domain !== "") {
@@ -55,7 +55,8 @@ export default function Home() {
       method: 'POST',
       body: JSON.stringify({
         urls: urls,
-        password: password
+        password: password,
+        path: path
       })
     })
     .then(res => res.json())
@@ -188,7 +189,7 @@ export default function Home() {
                 <hr className="opacity-50" />
                 <input type="text" name="domain" className="w-full p-4 rounded-md bg-transparent text-gray-900 dark:text-gray-100 text-lg font-medium focus:ring-0 sm:text-sm focus:outline-none" placeholder="Custom Domain (Free + Optional)" />
                 <hr className="opacity-50" />
-                <input type="text" name="ref" className="w-full p-4 rounded-md bg-transparent text-gray-900 dark:text-gray-100 text-lg font-medium focus:ring-0 sm:text-sm focus:outline-none" placeholder="Reference (Coming Soon)" />
+                <input type="text" name="path" className="w-full p-4 rounded-md bg-transparent text-gray-900 dark:text-gray-100 text-lg font-medium focus:ring-0 sm:text-sm focus:outline-none" placeholder="Path (Optional)" />
               </div>
               <div className="flex items-center justify-between gap-3 mt-4">
                 <button type="submit" className="w-full px-4 py-2.5 rounded-md bg-blue-500 dark:bg-blue-900 hover:bg-blue-600 dark:hover:bg-blue-800 text-white text-sm md:text-lg font-medium focus:ring-0 sm:text-sm">

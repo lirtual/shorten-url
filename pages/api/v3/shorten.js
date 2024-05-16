@@ -12,6 +12,8 @@ export default async function handler(req, res) {
 
   const password = body.password
 
+  const path = body.path
+
   // Split the URLs into an array, line break or ,
   const urlsArray = urls.split(/[\n,]+/)
   
@@ -21,14 +23,18 @@ export default async function handler(req, res) {
   for (const url of urlsArray) {
     if (url === '') continue
 
-    // radomly generate a key
-    let key = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
+    // Check if the path is set
+    let key = path || Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
 
     // check if key already exists
     const checkKey = await kv.get(key)
 
     // while check key
     while (checkKey) {
+      if (path) {
+        res.status(409).json({ error: "Path already exists" })
+        return
+      }
       key = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
     }
 
